@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HAPPY 200 DAYS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  @font-face{
+    font-family:'Geumeunbohwa';
+    src:url('./fonts/geumeunbohwa.ttf') format('truetype');
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{background:#EDE7DA}
+  body{
+    background:#F3EFE4;
+    color:#3f3a34;
+    font-family:'Geumeunbohwa','Gowun Dodum',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body.locked{overflow:hidden}
+  #grain{
+    position:fixed;inset:0;z-index:40;pointer-events:none;
+    opacity:.3;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  }
+  .page{max-width:560px;margin:0 auto;padding:0 18px}
+  a{color:#6b6270}
+  a:hover{color:#3f3a34}
+
+  /* ---- cover ---- */
+  .cover{padding:24vh 0 20vh;text-align:center}
+  .cover h1{
+    font-family:'Geumeunbohwa',cursive;
+    font-size:52px;font-weight:400;margin:0;line-height:1.15;
+    letter-spacing:.02em;color:#4c3f63;
+  }
+  .cover .rule{width:38px;height:1px;background:#cfc7b8;margin:26px auto}
+  .cover .date{font-size:20px;letter-spacing:.06em;color:#9c9488}
+
+  /* ---- spreads ---- */
+  .spread{position:relative;margin:0 0 13vh}
+  .spread .ttl{
+    position:absolute;left:2%;top:-2.5em;
+    font-family:'Geumeunbohwa',cursive;font-size:30px;line-height:1.15;
+    color:#4c3f63;max-width:90%;
+  }
+  .ph{position:absolute;margin:0;transform:rotate(var(--rot))}
+
+  /* polaroid */
+  .frm{
+    position:relative;
+    background:linear-gradient(#fff,#fdfcfa);
+    padding:9px 9px 0;
+    box-shadow:0 8px 22px rgba(70,58,44,.13), 0 1px 3px rgba(70,58,44,.10);
+    cursor:pointer;
+  }
+  .im{position:relative;aspect-ratio:var(--ar);overflow:hidden;background:#e6e1d7}
+  .im img,.im video{display:block;width:100%;height:100%;object-fit:cover;background:#e6e1d7}
+  .im.miss{background:repeating-linear-gradient(45deg,#eae5db 0 6px,#e2dcd1 6px 12px)}
+  .im.miss::after{
+    content:attr(data-note);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font:10px/1.4 ui-monospace,monospace;color:#a79e92;text-align:center;padding:8px;
+  }
+  .cap{
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:'Geumeunbohwa',cursive;font-size:13.5px;line-height:1.25;
+    color:#5c4a7d;padding:7px 6px 8px;min-height:34px;word-break:keep-all;
+  }
+  .cap.blank{min-height:26px;padding:0}
+
+  /* washi tape */
+  .tape{
+    position:absolute;z-index:3;pointer-events:none;
+    width:46px;height:19px;opacity:.82;
+    box-shadow:0 1px 2px rgba(70,58,44,.13);
+  }
+  .tape::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(255,255,255,.34),rgba(255,255,255,0) 30%,rgba(255,255,255,.28));
+  }
+  .t-stripe{background:repeating-linear-gradient(48deg,#bcd8cf 0 5px,#eef6f2 5px 10px)}
+  .t-dot{background:#e6dcc6;background-image:radial-gradient(#c9b998 1.6px,transparent 1.7px);background-size:9px 9px}
+  .t-plain{background:#d9d3e2}
+  .t-check{background:repeating-linear-gradient(0deg,#e7d5d2 0 5px,#f6ecea 5px 10px),repeating-linear-gradient(90deg,#e7d5d2 0 5px,#f6ecea 5px 10px);background-blend-mode:multiply}
+  .t-kraft{background:repeating-linear-gradient(90deg,#e3d6bd 0 4px,#efe6d3 4px 9px)}
+
+  /* ---- video ---- */
+  .play{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+    width:54px;height:54px;border-radius:50%;border:0;padding:0;
+    background:rgba(255,255,255,.76);backdrop-filter:blur(2px);
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .28s ease-out;cursor:pointer;
+  }
+  .play::before{
+    content:"";display:block;
+    border-left:14px solid rgba(60,50,44,.7);
+    border-top:9px solid transparent;border-bottom:9px solid transparent;
+    margin-left:4px;
+  }
+  .vid.playing .play{opacity:0;pointer-events:none}
+
+  /* ---- letter ---- */
+  .letter{background:#EBE4D5;border-top:1px solid #ded7c7;margin-top:4vh;padding:14vh 0 16vh}
+  .letter .inner{max-width:560px;margin:0 auto;padding:0 30px}
+  .letter h2{font-family:'Geumeunbohwa',cursive;font-weight:400;font-size:28px;margin:0 0 1.4em;color:#4c3f63}
+  .letter p{font-family:'Geumeunbohwa',cursive;font-size:21px;line-height:1.9;color:#514a54;margin:0;white-space:pre-line}
+  .letter .sign{margin-top:3em;text-align:right;font-family:'Geumeunbohwa',cursive;font-size:20px;color:#8d8479}
+
+  /* ---- lightbox ---- */
+  #lb{position:fixed;inset:0;z-index:60;visibility:hidden}
+  #lb.on{visibility:visible}
+  #lbbg{position:absolute;inset:0;background:#000;opacity:0;transition:opacity .3s ease-out}
+  #lb.on #lbbg{opacity:.85}
+  #lbimg{
+    position:fixed;transform-origin:50% 50%;
+    border:6px solid #fff;object-fit:cover;
+    transition:transform .3s ease-out;will-change:transform;
+  }
+  #lbcap{
+    position:absolute;left:0;right:0;bottom:max(22px,env(safe-area-inset-bottom));
+    text-align:center;font-family:'Geumeunbohwa',cursive;font-size:17px;color:rgba(255,255,255,.82);
+    padding:0 28px;opacity:0;transition:opacity .3s ease-out .06s;
+  }
+  #lb.on #lbcap{opacity:1}
+  #lbx{
+    position:absolute;right:14px;top:max(14px,env(safe-area-inset-top));
+    width:44px;height:44px;background:none;border:0;padding:0;cursor:pointer;
+    opacity:0;transition:opacity .3s ease-out
+  }
+  #lb.on #lbx{opacity:.85}
+  #lbx::before,#lbx::after{content:"";position:absolute;left:12px;top:21px;width:20px;height:1px;background:#fff}
+  #lbx::before{transform:rotate(45deg)}
+  #lbx::after{transform:rotate(-45deg)}
+  @media (prefers-reduced-motion:reduce){
+    #lbimg,#lbbg,#lbcap,.play{transition-duration:.01ms}
+  }
+</style>
+</head>
+<body>
+<div id="grain"></div>
+
+<div class="page">
+  <header class="cover">
+    <h1>HAPPY<br>200 DAYS</h1>
+    <div class="rule"></div>
+    <div class="date">26.01.18 &nbsp;—&nbsp; 26.08.05</div>
+  </header>
+  <main id="album"></main>
+</div>
+
+<div id="lb" aria-hidden="true">
+  <div id="lbbg"></div>
+  <img id="lbimg" alt="">
+  <div id="lbcap"></div>
+  <button id="lbx" aria-label="닫기"></button>
+</div>
+
+<script>
+const MANIFEST = [
+  {
+    "title": "우리의 첫 데이트",
+    "items": [
+      {
+        "src": "01. 우리의 첫 데이트/01. 저도 행복했습니다.jpg",
+        "comment": "저도 행복했습니다",
+        "type": "photo"
+      },
+      {
+        "src": "01. 우리의 첫 데이트/02. 짠~.jpg",
+        "comment": "짠~",
+        "type": "photo"
+      },
+      {
+        "src": "01. 우리의 첫 데이트/03. 나 꼬셨네 ㅋ.jpg",
+        "comment": "나 꼬셨네 ㅋ",
+        "type": "photo"
+      },
+      {
+        "src": "01. 우리의 첫 데이트/04. 또 짠!.jpg",
+        "comment": "또 짠!",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "한강 라면 먹은 날",
+    "items": [
+      {
+        "src": "02. 한강 라면 먹은 날/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "내가 처음으로 짠 데이트!",
+    "items": [
+      {
+        "src": "03. 내가 처음으로 짠 데이트!/01. 칼국수 냠냠.jpg",
+        "comment": "칼국수 냠냠",
+        "type": "photo"
+      },
+      {
+        "src": "03. 내가 처음으로 짠 데이트!/02. 아바타 보고 우리학교 놀러오심-1.jpg",
+        "comment": "아바타 보고 우리학교 놀러오심",
+        "type": "photo"
+      },
+      {
+        "src": "03. 내가 처음으로 짠 데이트!/02. 아바타 보고 우리학교 놀러오심-2.jpg",
+        "comment": "아바타 보고 우리학교 놀러오심",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "대망의 1월 18일",
+    "items": [
+      {
+        "src": "04. 대망의 1월 18일/01. 아주 역사적인 날입니다.-1.jpg",
+        "comment": "아주 역사적인 날입니다.",
+        "type": "photo"
+      },
+      {
+        "src": "04. 대망의 1월 18일/01. 아주 역사적인 날입니다.-2.jpg",
+        "comment": "아주 역사적인 날입니다.",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "첫 에어비앤비!",
+    "items": [
+      {
+        "src": "05. 첫 에어비앤비!/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "망이 알바 끝나고 두바이 와플 먹은 날!",
+    "items": [
+      {
+        "src": "06. 망이 알바 끝나고 두바이 와플 먹은 날!/01. -1.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "06. 망이 알바 끝나고 두바이 와플 먹은 날!/01. -2.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "06. 망이 알바 끝나고 두바이 와플 먹은 날!/02. 이 날 붙머 제거하다가 혼나기도 했었죠 하하.jpg",
+        "comment": "이 날 붙머 제거하다가 혼나기도 했었죠 하하",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "코타츠 카페 간 날~",
+    "items": [
+      {
+        "src": "07. 코타츠 카페 간 날~/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "내손 카페 간 날!",
+    "items": [
+      {
+        "src": "08. 내손 카페 간 날!/01. -1.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "08. 내손 카페 간 날!/01. -2.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "08. 내손 카페 간 날!/01. -3.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "08. 내손 카페 간 날!/02. 커리 먹으면서 어머니 통화 받는 망.jpg",
+        "comment": "커리 먹으면서 어머니 통화 받는 망",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "국립중앙박물관!",
+    "items": [
+      {
+        "src": "09. 국립중앙박물관!/01. 득도 망.jpg",
+        "comment": "득도 망",
+        "type": "photo"
+      },
+      {
+        "src": "09. 국립중앙박물관!/02. 망이 스토리에 올라온 나.jpg",
+        "comment": "망이 스토리에 올라온 나",
+        "type": "photo"
+      },
+      {
+        "src": "09. 국립중앙박물관!/03. 거울 기강잡기.jpg",
+        "comment": "거울 기강잡기",
+        "type": "photo"
+      },
+      {
+        "src": "09. 국립중앙박물관!/04. 타코!.jpg",
+        "comment": "타코!",
+        "type": "photo"
+      },
+      {
+        "src": "09. 국립중앙박물관!/05. 귀가~.JPG",
+        "comment": "귀가~",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "홍대 놀러 간 날! (PTSD)",
+    "items": [
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/01. -1.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/01. -2.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/02. 서로 코디해주기-1.jpg",
+        "comment": "서로 코디해주기",
+        "type": "photo"
+      },
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/02. 서로 코디해주기-2.jpg",
+        "comment": "서로 코디해주기",
+        "type": "photo"
+      },
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/02. 서로 코디해주기-3.jpg",
+        "comment": "서로 코디해주기",
+        "type": "photo"
+      },
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/03. 괜찮은 사람을 왜 만나-1.jpg",
+        "comment": "괜찮은 사람을 왜 만나???????",
+        "type": "photo"
+      },
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/03. 괜찮은 사람을 왜 만나-2.jpg",
+        "comment": "괜찮은 사람을 왜 만나???????",
+        "type": "photo"
+      },
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/04. 다시 기분 풀리심-1.jpg",
+        "comment": "다시 기분 풀리심",
+        "type": "photo"
+      },
+      {
+        "src": "10. 홍대 놀러 간 날! (PTSD)/04. 다시 기분 풀리심-2.jpg",
+        "comment": "다시 기분 풀리심",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "홍대 1박~!",
+    "items": [
+      {
+        "src": "11. 홍대 1박~!/01. 빈티지 미소녀-1.jpg",
+        "comment": "빈티지 미소녀",
+        "type": "photo"
+      },
+      {
+        "src": "11. 홍대 1박~!/01. 빈티지 미소녀-2.jpg",
+        "comment": "빈티지 미소녀",
+        "type": "photo"
+      },
+      {
+        "src": "11. 홍대 1박~!/01. 빈티지 미소녀-3.jpg",
+        "comment": "빈티지 미소녀",
+        "type": "photo"
+      },
+      {
+        "src": "11. 홍대 1박~!/02. 빈티지 미소녀와 시민-1.jpg",
+        "comment": "빈티지 미소녀와 시민",
+        "type": "photo"
+      },
+      {
+        "src": "11. 홍대 1박~!/02. 빈티지 미소녀와 시민-2.jpg",
+        "comment": "빈티지 미소녀와 시민",
+        "type": "photo"
+      },
+      {
+        "src": "11. 홍대 1박~!/03. 또 가고 싶다!.jpg",
+        "comment": "또 가고 싶다!",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "나 뚜쥬 끝나는거 기다리는 망이",
+    "items": [
+      {
+        "src": "12. 나 뚜쥬 끝나는거 기다리는 망이/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "수원 타임빌라스!",
+    "items": [
+      {
+        "src": "13. 수원 타임빌라스!/01. 망이가 찍어준 내 인생샷-1.JPG",
+        "comment": "망이가 찍어준 내 인생샷",
+        "type": "photo"
+      },
+      {
+        "src": "13. 수원 타임빌라스!/01. 망이가 찍어준 내 인생샷-2.JPG",
+        "comment": "망이가 찍어준 내 인생샷",
+        "type": "photo"
+      },
+      {
+        "src": "13. 수원 타임빌라스!/02. 이쁘다-1.JPG",
+        "comment": "이쁘다..",
+        "type": "photo"
+      },
+      {
+        "src": "13. 수원 타임빌라스!/02. 이쁘다-2.JPG",
+        "comment": "이쁘다..",
+        "type": "photo"
+      },
+      {
+        "src": "13. 수원 타임빌라스!/02. 이쁘다-3.JPG",
+        "comment": "이쁘다..",
+        "type": "photo"
+      },
+      {
+        "src": "13. 수원 타임빌라스!/02. 이쁘다-4.JPG",
+        "comment": "이쁘다..",
+        "type": "photo"
+      },
+      {
+        "src": "13. 수원 타임빌라스!/02. 이쁘다-5.JPG",
+        "comment": "이쁘다..",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "망이 학원 쉬는 시간에 디델리!",
+    "items": [
+      {
+        "src": "14. 망이 학원 쉬는 시간에 디델리!/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "망 님이 아주대학교를 재방문 해주셨습니다.",
+    "items": [
+      {
+        "src": "15. 망 님이 아주대학교를 재방문 해주셨습니다./01. -1.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "15. 망 님이 아주대학교를 재방문 해주셨습니다./01. -2.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "15. 망 님이 아주대학교를 재방문 해주셨습니다./02. 우리 첫 헌혈도 했어!-1.jpg",
+        "comment": "우리 첫 헌혈도 했어!",
+        "type": "photo"
+      },
+      {
+        "src": "15. 망 님이 아주대학교를 재방문 해주셨습니다./02. 우리 첫 헌혈도 했어!-2.jpg",
+        "comment": "우리 첫 헌혈도 했어!",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "감동의 눈물 day ...🥹🥺🖤🥲",
+    "items": [
+      {
+        "src": "16. 감동의 눈물 day .../01. 그것은 바로 롯데월드-1.jpg",
+        "comment": "그것은 바로 롯데월드",
+        "type": "photo"
+      },
+      {
+        "src": "16. 감동의 눈물 day .../01. 그것은 바로 롯데월드-2.jpg",
+        "comment": "그것은 바로 롯데월드",
+        "type": "photo"
+      },
+      {
+        "src": "16. 감동의 눈물 day .../01. 그것은 바로 롯데월드-3.jpg",
+        "comment": "그것은 바로 롯데월드",
+        "type": "photo"
+      },
+      {
+        "src": "16. 감동의 눈물 day .../01. 그것은 바로 롯데월드-4.jpg",
+        "comment": "그것은 바로 롯데월드",
+        "type": "photo"
+      },
+      {
+        "src": "16. 감동의 눈물 day .../01. 그것은 바로 롯데월드-5.jpg",
+        "comment": "그것은 바로 롯데월드",
+        "type": "photo"
+      },
+      {
+        "src": "16. 감동의 눈물 day .../02. 눈물버튼.jpg",
+        "comment": "눈물버튼",
+        "type": "photo"
+      },
+      {
+        "src": "16. 감동의 눈물 day .../01. 그것은 바로 롯데월드-6.JPG",
+        "comment": "그것은 바로 롯데월드",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "북수원 사우나!!",
+    "items": [
+      {
+        "src": "17. 북수원 사우나!!/01. -1.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "17. 북수원 사우나!!/01. -2.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "17. 북수원 사우나!!/01. -3.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "17. 북수원 사우나!!/01. -4.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "17. 북수원 사우나!!/01. -5.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "17. 북수원 사우나!!/02. 이 날 망이의 최애 사진.jpg",
+        "comment": "이 날 망이의 최애 사진",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "백민우 자택 급습하기",
+    "items": [
+      {
+        "src": "18. 백민우 자택 급습하기/01. 요리사 백.jpg",
+        "comment": "요리사 백",
+        "type": "photo"
+      },
+      {
+        "src": "18. 백민우 자택 급습하기/02. 민❤️망.jpg",
+        "comment": "민❤️망",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "망이가 좋아하는 사진",
+    "items": [
+      {
+        "src": "19. 망이가 좋아하는 사진/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "깡우동에서얼큰하게취하시고각기춤을선보이는망이",
+    "items": [
+      {
+        "src": "20. 깡우동에서얼큰하게취하시고각기춤을선보이는망이/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "한강 피크닉!!",
+    "items": [
+      {
+        "src": "21. 한강 피크닉!!/-1.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "21. 한강 피크닉!!/-2.JPG",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "21. 한강 피크닉!!/-3.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "21. 한강 피크닉!!/-4.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "21. 한강 피크닉!!/-5.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "21. 한강 피크닉!!/-6.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "같이 운동한 날!",
+    "items": [
+      {
+        "src": "22. 같이 운동한 날!/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "집가다가 벚꽃 본 날!",
+    "items": [
+      {
+        "src": "23. 집가다가 벚꽃 본 날!/01. 이 날 너무 행복했어-1.JPG",
+        "comment": "이 날 너무 행복했어",
+        "type": "photo"
+      },
+      {
+        "src": "23. 집가다가 벚꽃 본 날!/01. 이 날 너무 행복했어-2.JPG",
+        "comment": "이 날 너무 행복했어",
+        "type": "photo"
+      },
+      {
+        "src": "23. 집가다가 벚꽃 본 날!/01. 이 날 너무 행복했어-3.JPG",
+        "comment": "이 날 너무 행복했어",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "수원 스타필드 놀러간 날~",
+    "items": [
+      {
+        "src": "24. 수원 스타필드 놀러간 날~/-1.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "24. 수원 스타필드 놀러간 날~/-2.jpg",
+        "comment": "",
+        "type": "photo"
+      },
+      {
+        "src": "24. 수원 스타필드 놀러간 날~/-3.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "우리의 첫 셋로그",
+    "items": [
+      {
+        "src": "25. 우리의 첫 셋로그/-.mp4",
+        "comment": "",
+        "type": "video",
+        "poster": "25. 우리의 첫 셋로그/--poster.jpg"
+      }
+    ]
+  },
+  {
+    "title": "이즈럭스 🫣",
+    "items": [
+      {
+        "src": "26. 이즈럭스/-.mp4",
+        "comment": "",
+        "type": "video",
+        "poster": "26. 이즈럭스/--poster.jpg"
+      }
+    ]
+  },
+  {
+    "title": "망이의 인사법 강좌",
+    "items": [
+      {
+        "src": "27. 망이의 인사법 강좌/-.mp4",
+        "comment": "",
+        "type": "video",
+        "poster": "27. 망이의 인사법 강좌/--poster.jpg"
+      }
+    ]
+  },
+  {
+    "title": "대망의 100일!!",
+    "items": [
+      {
+        "src": "28. 대망의 100일!!/01. 몬자야끼 먹고~-2.jpg",
+        "comment": "몬자야끼 먹고~",
+        "type": "photo"
+      },
+      {
+        "src": "28. 대망의 100일!!/02. 사진도 찍고~.jpg",
+        "comment": "사진도 찍고~",
+        "type": "photo"
+      },
+      {
+        "src": "28. 대망의 100일!!/03. 선물 증정식.jpg",
+        "comment": "선물 증정식",
+        "type": "photo"
+      },
+      {
+        "src": "28. 대망의 100일!!/04. 이건 걍 귀여워서 ㅋ.jpg",
+        "comment": "이건 걍 귀여워서 ㅋ",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "스킨을 사기 위해 또다시 피를 뽑다",
+    "items": [
+      {
+        "src": "29. 스킨을 사기 위해 또다시 피를 뽑다/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "오버드라이브 챌린지 참여합니다",
+    "items": [
+      {
+        "src": "30. 오버드라이브 챌린지 참여합니다/-.mp4",
+        "comment": "",
+        "type": "video",
+        "poster": "30. 오버드라이브 챌린지 참여합니다/--poster.jpg"
+      }
+    ]
+  },
+  {
+    "title": "내 생일!",
+    "items": [
+      {
+        "src": "31. 내 생일!/01. 생에 첫 연극!.jpg",
+        "comment": "생에 첫 연극!",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/02. 생에 첫 오마카세!-1.jpg",
+        "comment": "생에 첫 오마카세!",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/02. 생에 첫 오마카세!-2.jpg",
+        "comment": "생에 첫 오마카세!",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/02. 생에 첫 오마카세!-3.jpg",
+        "comment": "생에 첫 오마카세!",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/03. 극락을 맛보심.mp4",
+        "comment": "극락을 맛보심",
+        "type": "video",
+        "poster": "31. 내 생일!/03. 극락을 맛보심-poster.jpg"
+      },
+      {
+        "src": "31. 내 생일!/04. 인생 사진 감사합니다.-1.JPG",
+        "comment": "인생 사진 감사합니다.",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/04. 인생 사진 감사합니다.-2.JPG",
+        "comment": "인생 사진 감사합니다.",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/04. 인생 사진 감사합니다.-3.JPG",
+        "comment": "인생 사진 감사합니다.",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/04. 인생 사진 감사합니다.-4.JPG",
+        "comment": "인생 사진 감사합니다.",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/04. 인생 사진 감사합니다.-5.JPG",
+        "comment": "인생 사진 감사합니다.",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/04. 인생 사진 감사합니다.-6.JPG",
+        "comment": "인생 사진 감사합니다.",
+        "type": "photo"
+      },
+      {
+        "src": "31. 내 생일!/04. 인생 사진 감사합니다.-7.JPG",
+        "comment": "인생 사진 감사합니다.",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "대전 여행!!!",
+    "items": [
+      {
+        "src": "32. 대전 여행!!!/01. 메롱.jpg",
+        "comment": "메롱",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/02. 바보망 ㅋ-1.jpg",
+        "comment": "바보망 ㅋ",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/02. 바보망 ㅋ-2.jpg",
+        "comment": "바보망 ㅋ",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/03. 홀리한 망이-1.jpg",
+        "comment": "홀리한 망이...",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/04. 카이막 맛집!.jpg",
+        "comment": "카이막 맛집!",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/05. 이뻐라 ㅋ.jpg",
+        "comment": "이뻐라 ㅋ",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/06. 택시에서.jpg",
+        "comment": "택시에서",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/07. 고죠사토루 부활.jpg",
+        "comment": "고죠사토루 부활",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/08. 물총 조개를 임신하심.jpg",
+        "comment": "물총 조개를 임신하심",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/09. 뭐해.jpg",
+        "comment": "👩🏻: 뭐해?;;",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/10. 광기의 성심당.jpg",
+        "comment": "광기의 성심당",
+        "type": "photo"
+      },
+      {
+        "src": "32. 대전 여행!!!/11. 와씨미쳣다.mp4",
+        "comment": "와씨미쳣다",
+        "type": "video",
+        "poster": "32. 대전 여행!!!/11. 와씨미쳣다-poster.jpg"
+      }
+    ]
+  },
+  {
+    "title": "공포의 쓴망",
+    "items": [
+      {
+        "src": "33. 공포의 쓴망/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "절경",
+    "items": [
+      {
+        "src": "34. 절경/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "전설의 을왕리 여행",
+    "items": [
+      {
+        "src": "35. 전설의 을왕리 여행/00. 출발하기 전에!.jpg",
+        "comment": "출발하기 전에!",
+        "type": "photo"
+      },
+      {
+        "src": "35. 전설의 을왕리 여행/01. 짬뽕 맛집 방문해요.jpg",
+        "comment": "짬뽕 맛집 방문해요",
+        "type": "photo"
+      },
+      {
+        "src": "35. 전설의 을왕리 여행/02. 우리 첫 수영!-1.jpg",
+        "comment": "우리 첫 수영!",
+        "type": "photo"
+      },
+      {
+        "src": "35. 전설의 을왕리 여행/02. 우리 첫 수영!-2.jpg",
+        "comment": "우리 첫 수영!",
+        "type": "photo"
+      },
+      {
+        "src": "35. 전설의 을왕리 여행/02. 우리 첫 수영!-3.jpg",
+        "comment": "우리 첫 수영!",
+        "type": "photo"
+      },
+      {
+        "src": "35. 전설의 을왕리 여행/03. 을왕리 레전드 미소녀 출몰.mp4",
+        "comment": "을왕리 레전드 미소녀 출몰",
+        "type": "video",
+        "poster": "35. 전설의 을왕리 여행/03. 을왕리 레전드 미소녀 출몰-poster.jpg"
+      },
+      {
+        "src": "35. 전설의 을왕리 여행/02. 우리 첫 수영!-4.jpg",
+        "comment": "우리 첫 수영!",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "슬랑이 만든 날!",
+    "items": [
+      {
+        "src": "36. 슬랑이 만든 날!/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "책잔 재방문~",
+    "items": [
+      {
+        "src": "37. 책잔 재방문~/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "백운호수 카페모테이에서 사진을 잘 못찍었다는 이유로 화가 난 망이",
+    "items": [
+      {
+        "src": "38. 백운호수 카페모테이에서 사진을 잘 못찍었다는 이유로 화가 난 망이/-.jpg",
+        "comment": "",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "성수 놀러간 날!",
+    "items": [
+      {
+        "src": "39. 성수 놀러간 날!/01. 빈티지 산타에서 한 컷.jpg",
+        "comment": "빈티지 산타에서 한 컷",
+        "type": "photo"
+      },
+      {
+        "src": "39. 성수 놀러간 날!/02. 망 님이 선물해주신 닥터마틴입니다.jpg",
+        "comment": "망 님이 선물해주신 닥터마틴입니다. 정말 감사드립니다.",
+        "type": "photo"
+      },
+      {
+        "src": "39. 성수 놀러간 날!/03. 레전드 흑발 미소녀.jpg",
+        "comment": "레전드 흑발 미소녀",
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "title": "또 가고 싶다낭...",
+    "items": [
+      {
+        "src": "40. 또 가고 싶다낭.../01. 인천공항 아이언맨 출몰.jpg",
+        "comment": "인천공항 아이언맨 출몰",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../02. 아사이 기다리면서.jpg",
+        "comment": "아사이 기다리면서",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../03. 인천공항 불법점거.jpg",
+        "comment": "인천공항 불법점거",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../04. 저희 비행기 탔어요.jpg",
+        "comment": "저희 비행기 탔어요",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../05. 태양은 여기에 와본 적이 있어요.jpg",
+        "comment": "태양은 여기에 와본 적이 있어요",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../06. 정말 이쁘군-1.jpg",
+        "comment": "정말 이쁘군",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../06. 정말 이쁘군-2.jpg",
+        "comment": "정말 이쁘군",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../07. 탈진-1.jpg",
+        "comment": "탈진",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../07. 탈진-2.jpg",
+        "comment": "탈진",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../08. 다낭고양이.mp4",
+        "comment": "다낭고양이",
+        "type": "video",
+        "poster": "40. 또 가고 싶다낭.../08. 다낭고양이-poster.jpg"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../10. 바나힐~-2.jpg",
+        "comment": "바나힐~",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../10. 바나힐~-1.jpg",
+        "comment": "바나힐~",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../09. 신짜오.mp4",
+        "comment": "신짜오",
+        "type": "video",
+        "poster": "40. 또 가고 싶다낭.../09. 신짜오-poster.jpg"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../11. 아오자이 미소녀.jpg",
+        "comment": "아오자이 미소녀",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../12. 떡볶이 배달해 먹은 날!.jpg",
+        "comment": "떡볶이 배달해 먹은 날!",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../13. 돌려돌려 바구니배.mp4",
+        "comment": "돌려돌려 바구니배",
+        "type": "video",
+        "poster": "40. 또 가고 싶다낭.../13. 돌려돌려 바구니배-poster.jpg"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../14. 여기 피자 레전드 맛있었음.jpg",
+        "comment": "여기 피자 레전드 맛있었음",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../15. 겁에 질리심.jpg",
+        "comment": "겁에 질리심",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../16. 발악수.jpg",
+        "comment": "발악수",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../17. 핑크스파 옆 맛집!.jpg",
+        "comment": "핑크스파 옆 맛집!",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../18. 그리운 유가네 망고.JPG",
+        "comment": "그리운 유가네 망고",
+        "type": "photo"
+      },
+      {
+        "src": "40. 또 가고 싶다낭.../19. 굿바이 다낭....jpg",
+        "comment": "굿바이 다낭...",
+        "type": "photo"
+      }
+    ]
+  }
+];
+
+/* layout templates: l/t/w in %, ar = width/height of the photo window */
+const T = {
+1:[
+  [{l:14,t:2,w:68,ar:.78}],
+  [{l:8,t:5,w:60,ar:1.35}],
+  [{l:22,t:2,w:64,ar:1}]
+],
+2:[
+  [{l:5,t:1,w:58,ar:1.35},{l:56,t:40,w:38,ar:.78}],
+  [{l:16,t:0,w:52,ar:.8},{l:6,t:66,w:44,ar:1.4}],
+  [{l:28,t:2,w:62,ar:.8},{l:4,t:66,w:32,ar:1}]
+],
+3:[
+  [{l:6,t:2,w:54,ar:.8},{l:64,t:20,w:30,ar:.75},{l:22,t:72,w:48,ar:1.4}],
+  [{l:10,t:0,w:46,ar:1.35},{l:58,t:16,w:36,ar:.8},{l:10,t:62,w:54,ar:.9}],
+  [{l:22,t:2,w:66,ar:1.4},{l:4,t:38,w:34,ar:.78},{l:48,t:70,w:44,ar:1}]
+],
+4:[
+  [{l:4,t:1,w:42,ar:.78},{l:54,t:14,w:42,ar:1.4},{l:8,t:54,w:32,ar:1},{l:50,t:68,w:44,ar:.8}],
+  [{l:12,t:0,w:62,ar:1.4},{l:4,t:34,w:36,ar:.8},{l:52,t:44,w:30,ar:1},{l:24,t:74,w:52,ar:.85}],
+  [{l:20,t:1,w:56,ar:.82},{l:3,t:50,w:30,ar:1},{l:40,t:58,w:52,ar:1.4},{l:12,t:84,w:44,ar:.78}]
+],
+5:[
+  [{l:5,t:0,w:38,ar:.8},{l:54,t:6,w:42,ar:1.35},{l:12,t:34,w:28,ar:1},{l:48,t:46,w:44,ar:.78},{l:6,t:78,w:52,ar:1.4}],
+  [{l:18,t:1,w:60,ar:1.35},{l:4,t:28,w:32,ar:.8},{l:44,t:36,w:50,ar:.85},{l:6,t:70,w:32,ar:1},{l:48,t:82,w:44,ar:.78}]
+],
+6:[
+  [{l:3,t:0,w:32,ar:.78},{l:46,t:5,w:50,ar:1.4},{l:6,t:32,w:28,ar:1},{l:42,t:40,w:38,ar:.8},{l:5,t:66,w:54,ar:1.35},{l:58,t:82,w:36,ar:.8}],
+  [{l:14,t:1,w:58,ar:1.4},{l:3,t:30,w:34,ar:.8},{l:46,t:30,w:30,ar:1},{l:20,t:56,w:52,ar:.85},{l:5,t:84,w:30,ar:1},{l:44,t:90,w:48,ar:1.4}]
+],
+7:[
+  [{l:4,t:0,w:30,ar:.78},{l:44,t:4,w:50,ar:1.4},{l:7,t:28,w:26,ar:1},{l:40,t:34,w:36,ar:.8},{l:5,t:58,w:54,ar:1.35},{l:60,t:70,w:34,ar:.8},{l:14,t:90,w:40,ar:1}],
+  [{l:16,t:1,w:56,ar:1.35},{l:3,t:26,w:30,ar:.8},{l:42,t:28,w:52,ar:.85},{l:8,t:56,w:26,ar:1},{l:40,t:62,w:34,ar:.78},{l:5,t:84,w:50,ar:1.4},{l:60,t:94,w:34,ar:1}]
+]
+};
+
+const TAPES=['t-stripe','t-dot','t-plain','t-check','t-kraft'];
+
+function rnd(i,salt){
+  const s=Math.sin((i+1)*12.9898+salt*78.233)*43758.5453;
+  return s-Math.floor(s);
+}
+function tilt(i){ return (rnd(i,0)*4-2).toFixed(2); }
+
+function ratio(slots){
+  let m=0;
+  for(const s of slots) m=Math.max(m,(s.w/100)/(s.ar*(1-s.t/100)));
+  return m+0.3;
+}
+function chunks(n, gidArr){
+  if(n<=7) return [n];
+  const cyc=[6,5,7,5,6,4], out=[]; let rem=n,i=0,pos=0;
+  while(rem>0){
+    let t=Math.min(cyc[i%cyc.length],rem);
+    if(rem-t>0 && rem-t<3) t=rem;
+    // never cut in the middle of a same-comment group
+    let cut=pos+t;
+    if(gidArr && cut<n && gidArr[cut-1]===gidArr[cut]){
+      let fwd=cut, back=cut;
+      while(fwd<n && gidArr[fwd-1]===gidArr[fwd]) fwd++;
+      while(back>pos+1 && gidArr[back-1]===gidArr[back]) back--;
+      cut = (fwd-cut <= cut-back) ? fwd : back;
+      t = cut-pos;
+    }
+    out.push(t); pos+=t; rem=n-pos; i++;
+  }
+  return out;
+}
+
+const album=document.getElementById('album');
+const vcount={};
+let gi=0;
+
+MANIFEST.forEach((ch,ci)=>{
+  const items=ch.items;
+  const gidMap=new Map(); let gnext=0;
+  const gid = items.map(it=>{
+    if(!it.comment) return 'x'+(gnext++);
+    if(!gidMap.has(it.comment)) gidMap.set(it.comment, gnext++);
+    return gidMap.get(it.comment);
+  });
+  const lastIdxOfGid = new Map();
+  gid.forEach((g,i)=> lastIdxOfGid.set(g,i));
+  let cursor=0;
+  chunks(items.length, items.map((it,i)=> it.comment ? gid[i] : Symbol())).forEach((size,part)=>{
+    const part_items=items.slice(cursor,cursor+size);
+    const variants=T[size]||T[7];
+    const k=vcount[size]=((vcount[size]||0)+1);
+    const slots=variants[(k-1)%variants.length];
+
+    const sp=document.createElement('section');
+    sp.className='spread';
+    sp.style.aspectRatio='1 / '+ratio(slots).toFixed(3);
+    sp.style.marginTop=(part?'9vh':'15vh');
+
+    if(!part){
+      const t=document.createElement('div');
+      t.className='ttl';
+      t.textContent=ch.title;
+      sp.appendChild(t);
+    }
+
+    part_items.forEach((it,j)=>{
+      const s=slots[j%slots.length];
+      const fig=document.createElement('figure');
+      fig.className='ph'+(it.type==='video'?' vid':'');
+      fig.style.left=s.l+'%'; fig.style.width=s.w+'%';
+      fig.dataset.t=s.t;
+      fig.style.setProperty('--rot',tilt(gi)+'deg');
+
+      const frm=document.createElement('div'); frm.className='frm';
+      const im=document.createElement('div'); im.className='im'; im.style.setProperty('--ar',s.ar);
+      const name=it.src.split('/').pop();
+
+      if(it.type==='video'){
+        const v=document.createElement('video');
+        v.preload='metadata'; v.playsInline=true; v.muted=true; v.loop=true;
+        if(it.poster) v.poster=encodeURI('./web/'+it.poster);
+        const src=document.createElement('source');
+        src.src=encodeURI('./web/'+it.src); src.type='video/mp4';
+        v.appendChild(src);
+        v.addEventListener('error',()=>{
+          const u=encodeURI('./web/'+it.src.normalize('NFC'));
+          if(src.src.indexOf(u)<0){ src.src=u; v.load(); }
+        },true);
+        im.appendChild(v);
+        const b=document.createElement('button'); b.className='play'; b.setAttribute('aria-label','재생');
+        im.appendChild(b);
+      }else{
+        const img=document.createElement('img');
+        img.src=encodeURI('./web/'+it.src);
+        img.alt=it.comment||ch.title;
+        img.decoding='async';
+        img.dataset.alt=encodeURI('./web/'+it.src.normalize('NFC'));
+        img.addEventListener('error',()=>{
+          if(img.dataset.alt && img.src.indexOf(img.dataset.alt)<0){ const u=img.dataset.alt; img.dataset.alt=''; img.src=u; return; }
+          im.classList.add('miss'); im.dataset.note=name; img.remove();
+        });
+        im.appendChild(img);
+      }
+      frm.appendChild(im);
+
+      const gIdx=cursor+j;
+      fig.dataset.grp=gid[gIdx];
+      fig.dataset.cap=it.comment||'';
+      const lastOfGroupHere = lastIdxOfGid.get(gid[gIdx]) === gIdx;
+      const cap=document.createElement('figcaption');
+      const text=(it.comment && lastOfGroupHere) ? it.comment : '';
+      cap.className='cap'+(text?'':' blank');
+      cap.textContent=text;
+      frm.appendChild(cap);
+
+      /* washi tape, index-fixed side + look */
+      const tp=document.createElement('span');
+      tp.className='tape '+TAPES[Math.floor(rnd(gi,3)*TAPES.length)];
+      const side=Math.floor(rnd(gi,5)*4);
+      const jx=8+rnd(gi,7)*22, rot=(rnd(gi,9)*70-35).toFixed(1);
+      const tw=(38+rnd(gi,11)*22);
+      tp.style.width=tw+'px';
+      if(side===0){ tp.style.left=jx+'%'; tp.style.top='-9px'; }
+      else if(side===1){ tp.style.right=jx+'%'; tp.style.top='-9px'; }
+      else if(side===2){ tp.style.left='-14px'; tp.style.top=(14+rnd(gi,13)*16)+'%'; }
+      else { tp.style.right='-14px'; tp.style.top=(14+rnd(gi,13)*16)+'%'; }
+      tp.style.transform='rotate('+rot+'deg)';
+      frm.appendChild(tp);
+
+      fig.appendChild(frm);
+      sp.appendChild(fig);
+      gi++;
+    });
+    album.appendChild(sp);
+    cursor+=size;
+  });
+});
+
+/* size each spread to its actual polaroid stack (frames are taller than the photo) */
+function fitSpreads(){
+  document.querySelectorAll('.spread').forEach(sp=>{
+    sp.style.height='auto';
+    sp.style.aspectRatio='auto';
+    const w=sp.getBoundingClientRect().width;
+    let deep=0;
+    sp.querySelectorAll('.ph').forEach(f=>{
+      const top=Math.round(parseFloat(f.dataset.t)/100*w);
+      f.style.top=top+'px';
+      deep=Math.max(deep, top+f.querySelector('.frm').offsetHeight);
+    });
+    /* nobody may cover anybody's caption strip */
+    const F=[...sp.querySelectorAll('.ph')].map(f=>{
+      const frm=f.querySelector('.frm'), cap=f.querySelector('.cap');
+      return {f,frm,x:f.offsetLeft,w:f.offsetWidth,h:frm.offsetHeight,
+              top:parseFloat(f.style.top),capH:cap?cap.offsetHeight:0,
+              grp:f.dataset.grp,
+              hasCap:cap&&!cap.classList.contains('blank')};
+    });
+    function avoidCollisions(){
+      for(let pass=0;pass<4;pass++){
+        let moved=false;
+        for(let i=1;i<F.length;i++){
+          for(let j=0;j<i;j++){
+            const a=F[i], b=F[j];
+            if(!b.hasCap || a.grp===b.grp) continue;
+            if(Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x) <= 4) continue;
+            const bandTop=b.top+b.h-b.capH-4, bandBot=b.top+b.h+4;
+            if(a.top+a.h > bandTop && a.top < bandBot){
+              a.top=Math.round(bandBot+8); moved=true;
+            }
+          }
+        }
+        if(!moved) break;
+      }
+    }
+    avoidCollisions();
+    for(let i=1;i<F.length;i++){
+      const a=F[i], b=F[i-1];
+      if(a.grp!==b.grp) continue;
+      a.top=Math.round(b.top+b.h*0.46);
+      const dx0=Math.round(((b.x+b.w*0.5)-(a.x+a.w*0.5))*0.35);
+      a.f.style.marginLeft=dx0+'px';
+      a.x+=dx0;
+      // if piling now covers someone else's caption band, try sliding sideways to clear it before giving up and pushing down
+      const blockers = F.filter(o=>o!==a && o.hasCap && o.grp!==a.grp)
+                       .filter(o=>{ const bandTop=o.top+o.h-o.capH-4, bandBot=o.top+o.h+4; return a.top+a.h>bandTop && a.top<bandBot; });
+      if(blockers.length){
+        const minX=0, maxX=w-a.w;
+        let best=null;
+        for(let dx=0; dx<=w && best===null; dx+=8){
+          for(const cand of [a.x+dx, a.x-dx]){
+            if(cand<minX||cand>maxX) continue;
+            const clear = blockers.every(bx=> Math.min(cand+a.w,bx.x+bx.w)-Math.max(cand,bx.x) <= 4);
+            if(clear){ best=cand; break; }
+          }
+        }
+        if(best!==null){
+          const shift=Math.round(best-a.x);
+          a.f.style.marginLeft=(parseFloat(a.f.style.marginLeft||'0')+shift)+'px';
+          a.x=best;
+        }
+      }
+    }
+    avoidCollisions();
+    deep=0;
+    F.forEach(o=>{ o.f.style.top=o.top+'px'; deep=Math.max(deep,o.top+o.h); });
+    sp.style.height=Math.ceil(deep+10)+'px';
+  });
+}
+function fitAll(){ fitSpreads(); }
+addEventListener('load',fitAll);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitAll);
+requestAnimationFrame(fitAll);
+if(window.ResizeObserver){
+  let pend=null;
+  const ro=new ResizeObserver(()=>{ clearTimeout(pend); pend=setTimeout(fitAll,80); });
+  document.querySelectorAll('.frm').forEach(f=>ro.observe(f));
+}
+let rz; addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(fitAll,220); });
+
+/* ---------- video : play in place ---------- */
+album.addEventListener('click',e=>{
+  const fig=e.target.closest('.vid');
+  if(!fig) return;
+  const v=fig.querySelector('video');
+  if(v.paused){ v.play().catch(()=>{}); fig.classList.add('playing'); }
+  else{ v.pause(); fig.classList.remove('playing'); }
+});
+
+/* ---------- lightbox ---------- */
+const lb=document.getElementById('lb'), lbimg=document.getElementById('lbimg'),
+      lbcap=document.getElementById('lbcap'), lbbg=document.getElementById('lbbg');
+let state=null;
+
+function target(r){
+  const sc=Math.min(innerWidth*0.9/r.width, innerHeight*0.8/r.height);
+  return {sc, dx:innerWidth/2-(r.left+r.width/2), dy:innerHeight/2-(r.top+r.height/2)};
+}
+function apply(extra){
+  const t=state.t;
+  lbimg.style.transform='translate('+t.dx+'px,'+(t.dy+(extra||0))+'px) scale('+t.sc+') rotate(0deg)';
+}
+function open(fig){
+  const img=fig.querySelector('img'); if(!img) return;
+  const r=fig.querySelector('.im').getBoundingClientRect();
+  const rot=fig.style.getPropertyValue('--rot');
+  const capText=fig.dataset.cap||'';
+  lbimg.src=img.currentSrc||img.src;
+  lbcap.textContent=capText;
+  lbimg.style.transition='none';
+  lbimg.style.left=r.left+'px'; lbimg.style.top=r.top+'px';
+  lbimg.style.width=r.width+'px'; lbimg.style.height=r.height+'px';
+  lbimg.style.transform='rotate('+rot+')';
+  const t=target(r);
+  lbimg.style.borderWidth=(6/t.sc)+'px';
+  state={rot,t,drag:0};
+  lb.classList.add('on'); lb.setAttribute('aria-hidden','false');
+  document.body.classList.add('locked');
+  requestAnimationFrame(()=>{ lbimg.style.transition='transform .3s ease-out'; apply(0); });
+}
+function close(){
+  if(!state) return;
+  lbimg.style.transition='transform .3s ease-out';
+  lbimg.style.transform='rotate('+state.rot+')';
+  lb.classList.remove('on'); lb.setAttribute('aria-hidden','true');
+  document.body.classList.remove('locked');
+  state=null;
+  setTimeout(()=>{ if(!state) lbimg.removeAttribute('src'); },320);
+}
+album.addEventListener('click',e=>{
+  const fig=e.target.closest('.ph');
+  if(!fig || fig.classList.contains('vid')) return;
+  open(fig);
+});
+document.getElementById('lbx').addEventListener('click',close);
+lbbg.addEventListener('click',close);
+addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+
+let sy=null;
+lb.addEventListener('touchstart',e=>{ if(state&&e.touches.length===1) sy=e.touches[0].clientY; },{passive:true});
+lb.addEventListener('touchmove',e=>{
+  if(sy===null||!state) return;
+  e.preventDefault();
+  const d=e.touches[0].clientY-sy;
+  if(d>0){ state.drag=d; lbimg.style.transition='none'; apply(d); lbbg.style.opacity=Math.max(0,.85-d/500); }
+},{passive:false});
+lb.addEventListener('touchend',()=>{
+  if(sy===null||!state) return;
+  const d=state.drag; sy=null; lbbg.style.opacity='';
+  if(d>70) close();
+  else{ lbimg.style.transition='transform .25s ease-out'; state.drag=0; apply(0); }
+},{passive:true});
+</script>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#F3EFE4"/><rect x="30" y="30" width="40" height="44" fill="#fff" stroke="#cfc7b8"/><rect x="34" y="34" width="32" height="30" fill="#e0d8cb"/><rect x="42" y="26" width="16" height="7" fill="#bcd8cf"/></svg>
+</template>
+</body>
+</html>
